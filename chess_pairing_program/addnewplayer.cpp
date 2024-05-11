@@ -17,8 +17,6 @@ addnewplayer::~addnewplayer()
 
 void addnewplayer::on_pushButton_clicked()
 {
-
-
     QString name, surname, sex,date_of_birth, federation, fide_rating, rating, category;
 
     name=ui->txt_name->text();
@@ -40,7 +38,7 @@ void addnewplayer::on_pushButton_clicked()
     qry->prepare("INSERT into players(name,surname,sex,date_of_birth,federation,fide_rating,ranking,category) values('"+name+"', '"+surname+"', '"+sex+"' , '"+date_of_birth+"' , '"+federation+"' , '"+fide_rating+"', '"+rating+"', '"+category+"')");
 
     if(qry->exec()){
-        QMessageBox::critical(this,tr("tt"),tr("this is a message"));
+        QMessageBox::information(this,tr("success"),tr("Zawodnik został dodany do bazy zawodników"));
     }else{
         QMessageBox::critical(this,tr("error"),qry->lastError().text());
     }
@@ -48,5 +46,11 @@ void addnewplayer::on_pushButton_clicked()
 
 
     mydb.close();
+}
+
+
+void addnewplayer::on_pushButton_2_clicked()
+{
+    this->close();
 }
 

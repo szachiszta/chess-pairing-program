@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "addtournament.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -31,5 +32,13 @@ void MainWindow::on_pushButton_clicked()
     addnewplayer addnewplayer;
     addnewplayer.setModal(true);
     addnewplayer.exec();
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    addtournament addtournament;
+    addtournament.setModal(true);
+    addtournament.exec();
 }
 

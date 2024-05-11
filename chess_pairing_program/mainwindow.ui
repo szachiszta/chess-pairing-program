@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>884</width>
-    <height>600</height>
+    <width>695</width>
+    <height>468</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>50</y>
+      <x>440</x>
+      <y>180</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>100</y>
+      <x>440</x>
+      <y>230</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -43,8 +43,8 @@
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>430</x>
-      <y>150</y>
+      <x>440</x>
+      <y>280</y>
       <width>171</width>
       <height>31</height>
      </rect>
@@ -89,13 +89,52 @@
      <string>Zawodnicy w Turnieju</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="btn_active_tournament">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>130</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Wybierz aktywny turniej</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_pairings">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>83</y>
+      <width>171</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Przejdź do kojarzeń</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_active_tournament">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>20</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Nazwa aktywnego turnieju</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>884</width>
+     <width>695</width>
      <height>21</height>
     </rect>
    </property>

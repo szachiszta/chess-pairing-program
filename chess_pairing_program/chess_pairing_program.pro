@@ -11,17 +11,20 @@ CONFIG += c++17
 SOURCES += \
     addnewplayer.cpp \
     addplayertotournament.cpp \
+    addtournament.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
     addnewplayer.h \
     addplayertotournament.h \
+    addtournament.h \
     mainwindow.h
 
 FORMS += \
     addnewplayer.ui \
     addplayertotournament.ui \
+    addtournament.ui \
     mainwindow.ui
 
 # Default rules for deployment.
