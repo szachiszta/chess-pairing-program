@@ -15,6 +15,9 @@ public:
     explicit addnewplayer(QWidget *parent = nullptr);
     ~addnewplayer();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::addnewplayer *ui;
 };
