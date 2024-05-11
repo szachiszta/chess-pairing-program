@@ -13,19 +13,22 @@ SOURCES += \
     addplayertotournament.cpp \
     addtournament.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    tournamentslist.cpp
 
 HEADERS += \
     addnewplayer.h \
     addplayertotournament.h \
     addtournament.h \
-    mainwindow.h
+    mainwindow.h \
+    tournamentslist.h
 
 FORMS += \
     addnewplayer.ui \
     addplayertotournament.ui \
     addtournament.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    tournamentslist.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
