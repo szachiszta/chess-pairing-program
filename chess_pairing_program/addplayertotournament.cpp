@@ -53,6 +53,7 @@ void addPlayerToTournament::on_tableView_activated(const QModelIndex &index)
         while (qry.next()) {
             resultString = qry.value(0).toString();  // ID zawodnika
             qDebug() << "Emitting signal with player ID:" << resultString; //Sprawdzenie emisji sygnału
+            mydb.close();
             emit playerAdded(resultString);
             QMessageBox::information(this,tr("Sukces"),"Poprawnie dodano gracza o ID: "+resultString);
         }

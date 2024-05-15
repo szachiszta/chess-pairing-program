@@ -46,6 +46,5 @@ private:
     QString tournament_id = ""; //id aktywnego turnieju
     QString tournament_name = ""; // nazwa aktywnego turnieju
     QVector<QString> playerIds; // Tablica przechowująca ID zawodników
-    QSqlQueryModel *playerModel; // Model danych dla QTableView
 };
 #endif // MAINWINDOW_H

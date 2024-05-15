@@ -18,8 +18,6 @@ MainWindow::MainWindow(const QString &resultString,const QString &resultString2,
     }else{
          ui->label_active_tournament->setText(tournament_name);
     }
-
-    updatePlayerTable(); // Początkowa aktualizacja tabeli
 }
 
 
@@ -31,13 +29,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    addPlayerToTournament *addPlayerDialog = new addPlayerToTournament(this);
 
-    // Podłączenie sygnału przed wywołaniem exec()
-    connect(addPlayerDialog, &addPlayerToTournament::playerAdded, this, &MainWindow::onPlayerAdded);
-    qDebug() << "Connected playerAdded signal to onPlayerAdded slot";
+    if(tournament_id != ""){
+        addPlayerToTournament *addPlayerDialog = new addPlayerToTournament(this);
 
-    addPlayerDialog->exec(); // Wyświetlanie okna dialogowego jako modalne
+        // Podłączenie sygnału przed wywołaniem exec()
+        connect(addPlayerDialog, &addPlayerToTournament::playerAdded, this, &MainWindow::onPlayerAdded);
+        qDebug() << "Connected playerAdded signal to onPlayerAdded slot";
+
+        addPlayerDialog->exec(); // Wyświetlanie okna dialogowego jako modalne
+        updatePlayerTable(); // Początkowa aktualizacja tabeli
+    }
+    else{
+         QMessageBox::critical(this,tr("error"),"Aby dodać zawodników do turnieju musisz wybrać turniej!");
+    }
+
+
 }
 
 void MainWindow::on_pushButton_3_clicked()
@@ -97,20 +104,28 @@ void MainWindow::updatePlayerTable()
     mydb.open();
 
     QSqlQuery query;
-    query.prepare("SELECT id FROM players");
+    QSqlQueryModel * modal = new QSqlQueryModel();
+    QString query_text = "SELECT name,surname FROM players where ";
+
+    if(playerIds.size() != 0){
+        for (int i = 0; i < playerIds.size(); ++i) {
+            QString playerId = playerIds.at(i);
+            query_text +="player_id="+playerId;
+            if(i != playerIds.size()-1)
+                query_text+=" or ";
+        }
+    }//Wyświetl wszystkich dodanych zawodników
+
+    qDebug()<<query_text;
+    query.prepare(query_text);
 
     if (!query.exec()) {
         qDebug() << "Error fetching players from database:" << query.lastError().text();
         return;
     }
 
-    playerModel->setQuery(query);
-
-    if (playerModel->lastError().isValid()) {
-        qDebug() << "Error setting model query:" << playerModel->lastError().text();
-    }
-
-    ui->tableView->resizeColumnsToContents();
+    modal->setQuery(query);
+    ui->tableView->setModel(modal);
 }
 
 
