@@ -37,10 +37,15 @@ private slots:
     void on_pushButton_2_clicked();
 
     void on_btn_active_tournament_clicked();
+    void onPlayerAdded(const QString &playerId); // Upewnij się, że ta funkcja jest zadeklarowana
+    void updatePlayerTable(); // Aktualizacja widoku tabeli
+
 
 private:
     Ui::MainWindow *ui;
     QString tournament_id = ""; //id aktywnego turnieju
     QString tournament_name = ""; // nazwa aktywnego turnieju
+    QVector<QString> playerIds; // Tablica przechowująca ID zawodników
+    QSqlQueryModel *playerModel; // Model danych dla QTableView
 };
 #endif // MAINWINDOW_H

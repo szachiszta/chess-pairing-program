@@ -43,6 +43,7 @@ void addtournament::on_add_tournament_clicked()
 
     if(qry->exec()){
         QMessageBox::information(this,tr("success"),tr("Turniej został dodany"));
+        this->close();
     }else{
         QMessageBox::critical(this,tr("error"),qry->lastError().text());
     }

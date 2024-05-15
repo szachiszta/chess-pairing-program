@@ -4,20 +4,6 @@
 #include <QMessageBox>
 
 
-/*MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
-{
-
-    ui->setupUi(this);
-
-
-    ui->label_active_tournament->setText(tournament_id);
-
-}
-*/
-
-// W pliku źródłowym klasy MainWindow (mainwindow.cpp)
 MainWindow::MainWindow(const QString &resultString,const QString &resultString2, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     // Inicjalizacja okna głównego
     ui->setupUi(this);
@@ -33,6 +19,7 @@ MainWindow::MainWindow(const QString &resultString,const QString &resultString2,
          ui->label_active_tournament->setText(tournament_name);
     }
 
+    updatePlayerTable(); // Początkowa aktualizacja tabeli
 }
 
 
@@ -44,9 +31,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    addPlayerToTournament addplayertotournament;
-    addplayertotournament.setModal(true);
-    addplayertotournament.exec();
+    addPlayerToTournament *addPlayerDialog = new addPlayerToTournament(this);
+
+    // Podłączenie sygnału przed wywołaniem exec()
+    connect(addPlayerDialog, &addPlayerToTournament::playerAdded, this, &MainWindow::onPlayerAdded);
+    qDebug() << "Connected playerAdded signal to onPlayerAdded slot";
+
+    addPlayerDialog->exec(); // Wyświetlanie okna dialogowego jako modalne
 }
 
 void MainWindow::on_pushButton_3_clicked()
@@ -86,5 +77,40 @@ void MainWindow::setTournamentName(const QString &result){
     tournament_name = result;
 }
 
+void MainWindow::onPlayerAdded(const QString &playerId)
+{
+    // Dodawanie ID zawodnika do tablicy
+    if (!playerIds.contains(playerId)) {
+        playerIds.append(playerId);
+        qDebug() << "Player added with ID:" << playerId;
+        qDebug() << "Current player IDs:" << playerIds;
+    } else {
+        qDebug() << "Player with ID:" << playerId << "is already added.";
+    }
+}
+
+
+void MainWindow::updatePlayerTable()
+{
+    QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
+    mydb.setDatabaseName("database.db");
+    mydb.open();
+
+    QSqlQuery query;
+    query.prepare("SELECT id FROM players");
+
+    if (!query.exec()) {
+        qDebug() << "Error fetching players from database:" << query.lastError().text();
+        return;
+    }
+
+    playerModel->setQuery(query);
+
+    if (playerModel->lastError().isValid()) {
+        qDebug() << "Error setting model query:" << playerModel->lastError().text();
+    }
+
+    ui->tableView->resizeColumnsToContents();
+}
 
 
