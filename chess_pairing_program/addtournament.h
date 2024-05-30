@@ -20,8 +20,15 @@ private slots:
 
     void on_add_tournament_clicked();
 
+    void on_tableView_clicked(const QModelIndex &index);
+
+    void on_edit_tournament_clicked();
+
+    void on_delete_tournament_clicked();
+
 private:
     Ui::addtournament *ui;
+    int manage_tournament = -1;
 };
 
 #endif // ADDTOURNAMENT_H
