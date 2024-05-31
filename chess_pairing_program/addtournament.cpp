@@ -16,7 +16,7 @@ addtournament::addtournament(QWidget *parent)
     QSqlQuery* qry = new QSqlQuery(mydb);
     mydb.open();
 
-    qry->prepare("SELECT name,place,date from tournaments");
+    qry->prepare("SELECT id,name,place,date from tournaments");
     qry->exec();
     modal->setQuery(*qry);
     ui->tableView->setModel(modal);
@@ -69,7 +69,8 @@ void addtournament::on_add_tournament_clicked()
 
 void addtournament::on_tableView_clicked(const QModelIndex &index)
 {
-    manage_tournament = index.row();
+    manage_tournament = index.sibling(index.row(), 0).data().toInt();
+
     qDebug() << index.row();
     if(manage_tournament > -1) {
         QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
@@ -107,7 +108,7 @@ void addtournament::on_tableView_clicked(const QModelIndex &index)
 
 void addtournament::on_edit_tournament_clicked()
 {
-    if(manage_tournament != 0){
+    if(manage_tournament != -1){
         QString arbiter, place, name, number_of_rounds, date;
         arbiter=ui->txt_arbiter->text();
         place=ui->txt_place->text();
@@ -136,7 +137,7 @@ void addtournament::on_edit_tournament_clicked()
             QMessageBox::critical(this,tr("error"),qry->lastError().text());
         }
         mydb.close();
-        manage_tournament = 0; //Nie ma aktualnie zarządzanego turnieju
+        manage_tournament = -1; //Nie ma aktualnie zarządzanego turnieju
     }
     else{
         QMessageBox::critical(this,tr("error"),tr("Najpierw wybierz turniej do edycji"));
