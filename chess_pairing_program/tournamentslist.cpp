@@ -8,7 +8,7 @@ tournamentsList::tournamentsList(QWidget *parent)
     , ui(new Ui::tournamentsList)
 {
     ui->setupUi(this);
-
+    this->setWindowTitle("Wybierz aktywny turniej"); // Ustawienie nowego tytułu okna
 
     QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
     mydb.setDatabaseName("database.db");

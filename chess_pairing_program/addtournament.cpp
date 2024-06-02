@@ -8,6 +8,7 @@ addtournament::addtournament(QWidget *parent)
     , ui(new Ui::addtournament)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Zarządzanie turniejami"); // Ustawienie nowego tytułu okna
     QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
     mydb.setDatabaseName("database.db");
 
@@ -131,6 +132,8 @@ void addtournament::on_edit_tournament_clicked()
         if(qry->exec()){
             QMessageBox::information(this,tr("success"),tr("Turniej został edytowany"));
             this->close();
+            addtournament *newDialog = new addtournament();
+            newDialog->show();
         }else{
             QMessageBox::critical(this,tr("error"),qry->lastError().text());
         }
@@ -156,6 +159,8 @@ void addtournament::on_delete_tournament_clicked()
         if(qry->exec()){
             QMessageBox::information(this,tr("success"),tr("Turniej został usunięty"));
             this->close();
+            addtournament *newDialog = new addtournament();
+            newDialog->show();
         }else{
             QMessageBox::critical(this,tr("error"),qry->lastError().text());
         }

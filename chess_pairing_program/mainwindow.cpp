@@ -7,6 +7,7 @@
 MainWindow::MainWindow(const QString &resultString,const QString &resultString2, QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     // Inicjalizacja okna głównego
     ui->setupUi(this);
+    this->setWindowTitle("Projekt program kojarzący"); // Ustawienie nowego tytułu okna
 
     if (!resultString.isEmpty()) {
         setTournamentID(resultString);
@@ -118,22 +119,28 @@ void MainWindow::updatePlayerTable()
 
     qDebug()<<query_text;
     query.prepare(query_text);
-
     if (!query.exec()) {
         qDebug() << "Error fetching players from database:" << query.lastError().text();
         return;
     }
-
     modal->setQuery(query);
     ui->tableView->setModel(modal);
 }
 
-
-
 void MainWindow::on_btn_pairings_clicked()
 {
-    pairings pairings(nullptr, playerIds);
-    pairings.setModal(true);
-    pairings.exec();
+    if(tournament_id != ""){
+        if(playerIds.size()>3){ //dodaj opcję kontunuowania turnieju -> jeżeli już są kojarzenia/////////////////////////
+            pairings pairings(nullptr, playerIds, tournament_id);
+            pairings.setModal(true);
+            pairings.exec();
+        }
+        else{
+            QMessageBox::critical(this,tr("error"),"Aby zarządzać turniejem musisz wybrać co najmniej 4 zawodników!");
+        }
+    }
+    else{
+        QMessageBox::critical(this,tr("error"),"Aby kojarzyć turniej należy wybrać turniej!");
+    }
 }
 

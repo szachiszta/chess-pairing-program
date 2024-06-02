@@ -8,6 +8,7 @@ addnewplayer::addnewplayer(QWidget *parent)
     , ui(new Ui::addnewplayer)
 {
     ui->setupUi(this);
+    this->setWindowTitle("Zarządzanie zawodnikami"); // Ustawienie nowego tytułu okna
     QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
     mydb.setDatabaseName("database.db");
 
@@ -16,7 +17,7 @@ addnewplayer::addnewplayer(QWidget *parent)
     QSqlQuery* qry = new QSqlQuery(mydb);
     mydb.open();
 
-    qry->prepare("SELECT * from players");
+    qry->prepare("SELECT player_id, name, surname, category, fide_rating, date_of_birth from players");
     qry->exec();
     modal->setQuery(*qry);
     ui->tableView->setModel(modal);
@@ -143,6 +144,8 @@ void addnewplayer::on_edit_player_clicked()
         if(qry->exec()){
             QMessageBox::information(this,tr("success"),tr("Profil zawodnika został edytowany"));
             this->close();
+            addnewplayer *newDialog = new addnewplayer();
+            newDialog->show();
         }else{
             QMessageBox::critical(this,tr("error"),qry->lastError().text());
         }
@@ -169,6 +172,8 @@ void addnewplayer::on_pushButton_3_clicked()
         if(qry->exec()){
             QMessageBox::information(this,tr("success"),tr("Zawodnik został usunięty"));
             this->close();
+            addnewplayer *newDialog = new addnewplayer();
+            newDialog->show();
         }else{
             QMessageBox::critical(this,tr("error"),qry->lastError().text());
         }
