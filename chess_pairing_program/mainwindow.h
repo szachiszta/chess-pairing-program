@@ -8,6 +8,7 @@
 #include "addplayertotournament.h"
 #include "addnewplayer.h"
 #include "tournamentslist.h"
+#include "pairings.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -40,6 +41,8 @@ private slots:
     void onPlayerAdded(const QString &playerId); // Upewnij się, że ta funkcja jest zadeklarowana
     void updatePlayerTable(); // Aktualizacja widoku tabeli
 
+
+    void on_btn_pairings_clicked();
 
 private:
     Ui::MainWindow *ui;

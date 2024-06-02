@@ -14,6 +14,7 @@ SOURCES += \
     addtournament.cpp \
     main.cpp \
     mainwindow.cpp \
+    pairings.cpp \
     tournamentslist.cpp
 
 HEADERS += \
@@ -21,6 +22,7 @@ HEADERS += \
     addplayertotournament.h \
     addtournament.h \
     mainwindow.h \
+    pairings.h \
     tournamentslist.h
 
 FORMS += \
@@ -28,6 +30,7 @@ FORMS += \
     addplayertotournament.ui \
     addtournament.ui \
     mainwindow.ui \
+    pairings.ui \
     tournamentslist.ui
 
 # Default rules for deployment.

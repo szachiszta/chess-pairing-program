@@ -129,3 +129,11 @@ void MainWindow::updatePlayerTable()
 }
 
 
+
+void MainWindow::on_btn_pairings_clicked()
+{
+    pairings pairings(nullptr, playerIds);
+    pairings.setModal(true);
+    pairings.exec();
+}
+

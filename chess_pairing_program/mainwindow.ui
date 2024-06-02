@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Dodaj Zawodnika</string>
+     <string>Zarządzaj zawodnikami</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_2">
@@ -37,7 +37,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Utwórz nowy turniej</string>
+     <string>Zarządzaj turniejami</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton_3">
@@ -58,12 +58,12 @@
      <rect>
       <x>40</x>
       <y>340</y>
-      <width>171</width>
+      <width>281</width>
       <height>31</height>
      </rect>
     </property>
     <property name="text">
-     <string>Dodaj Zawodnika do Turnieju</string>
+     <string>Dodaj Zawodnika do aktywnego turnieju</string>
     </property>
    </widget>
    <widget class="QTableView" name="tableView">

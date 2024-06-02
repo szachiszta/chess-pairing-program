@@ -45,8 +45,6 @@ void addtournament::on_add_tournament_clicked()
     name=ui->txt_name->text();
     number_of_rounds=ui->txt_number->text();
     date=ui->txt_date->text();
-
-
     // TO DO SPRAWDZANIE POPRAWNOŚCI PODANYCH DANYCH
 
     QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
@@ -144,7 +142,6 @@ void addtournament::on_edit_tournament_clicked()
     }
 }
 
-
 void addtournament::on_delete_tournament_clicked()
 {
     if(manage_tournament > -1){
@@ -170,4 +167,3 @@ void addtournament::on_delete_tournament_clicked()
         QMessageBox::critical(this,tr("error"),tr("Najpierw wybierz turniej do usunięcia"));
     }
 }
-

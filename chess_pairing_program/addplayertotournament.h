@@ -2,6 +2,7 @@
 #define ADDPLAYERTOTOURNAMENT_H
 
 #include <QDialog>
+#include <QModelIndex>
 
 namespace Ui {
 class addPlayerToTournament;
@@ -26,6 +27,7 @@ private slots:
 
 private:
     Ui::addPlayerToTournament *ui;
+    QModelIndex highlightedIndex;
 };
 
 #endif // ADDPLAYERTOTOURNAMENT_H

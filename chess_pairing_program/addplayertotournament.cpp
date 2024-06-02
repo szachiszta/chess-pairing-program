@@ -32,7 +32,7 @@ addPlayerToTournament::~addPlayerToTournament()
 
 void addPlayerToTournament::on_tableView_activated(const QModelIndex &index)
 {
-    QString val = ui->tableView->model()->data(index).toString(); // Element, który klikniemy 2 razy
+    QString val = index.sibling(index.row(), 0).data().toString();
     QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
     mydb.setDatabaseName("database.db");
 
@@ -54,9 +54,13 @@ void addPlayerToTournament::on_tableView_activated(const QModelIndex &index)
             emit playerAdded(resultString);
             QMessageBox::information(this, tr("Sukces"), "Poprawnie dodano gracza o ID: " + resultString);
 
-            // Ustawienie koloru tła dla komórki ID na zielono
-            ui->tableView->model()->setData(index, QBrush(Qt::green), Qt::BackgroundRole);
-            ui->tableView->viewport()->update();  // Odświeżenie widoku tabeli
+            // Wyróżnij wiersz
+            if (highlightedIndex.isValid()) {
+                ui->tableView->model()->setData(highlightedIndex, QVariant(), Qt::BackgroundRole);
+            }
+
+            highlightedIndex = index;
+            ui->tableView->model()->setData(highlightedIndex, QColor(Qt::yellow), Qt::BackgroundRole);
         }
     } else {
         QMessageBox::warning(this, tr("Błąd"), qry.lastError().text());
