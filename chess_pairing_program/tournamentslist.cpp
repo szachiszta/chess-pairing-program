@@ -10,6 +10,7 @@ tournamentsList::tournamentsList(QWidget *parent)
     ui->setupUi(this);
     this->setWindowTitle("Wybierz aktywny turniej"); // Ustawienie nowego tytułu okna
 
+    //WYŚWIETL WSZYSTKIE TURNIEJE Z BAZY DANYCH
     QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
     mydb.setDatabaseName("database.db");
 
@@ -18,7 +19,7 @@ tournamentsList::tournamentsList(QWidget *parent)
     QSqlQuery* qry = new QSqlQuery(mydb);
     mydb.open();
 
-    qry->prepare("SELECT name,place,date from tournaments");
+    qry->prepare("SELECT id,name,place,date from tournaments");
     qry->exec();
     modal->setQuery(*qry);
     ui->tableView->setModel(modal);
@@ -26,24 +27,22 @@ tournamentsList::tournamentsList(QWidget *parent)
     mydb.close();
 }
 
-tournamentsList::~tournamentsList()
-{
+tournamentsList::~tournamentsList(){
     delete ui;
 }
 
-void tournamentsList::on_tableView_activated(const QModelIndex &index)
-{
 
-    QString val=ui->tableView->model()->data(index).toString(); //element który klikniemy 2 razy
+void tournamentsList::on_tableView_activated(const QModelIndex &index){
+
+    QString val = index.sibling(index.row(), 0).data().toString(); // ID klikniętego wiersza
     QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
     mydb.setDatabaseName("database.db");
     mydb.open();
 
 
     QSqlQuery qry;
-
-    qry.prepare("select * from tournaments where place='"+val+"' or name='"+val+"' or date='"+val+"'"); //uniwersalne dla każdej klikniętej wartości
-
+    qry.prepare("select * from tournaments where id=:val");
+    qry.bindValue(":val", val);  // Bezpieczne zapytanie
     if (qry.exec()) {
         QString resultString;
         QString resultString2;
@@ -60,7 +59,6 @@ void tournamentsList::on_tableView_activated(const QModelIndex &index)
     } else {
         QMessageBox::warning(this, tr("Błąd"), qry.lastError().text());
     }
-
     mydb.close();
 }
 

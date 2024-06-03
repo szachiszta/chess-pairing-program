@@ -26,6 +26,8 @@ private slots:
 
     void on_delete_tournament_clicked();
 
+    bool checkTournamentInputs(QString arbiter, QString place, QString name, QString number_of_rounds);
+
 private:
     Ui::addtournament *ui;
     int manage_tournament = -1;

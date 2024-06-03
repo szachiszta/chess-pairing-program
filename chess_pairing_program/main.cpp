@@ -8,8 +8,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    QString iconPath = ":/icons/myicon.png";
-
+    QString iconPath = "logo.jpg";
     // Ustawienie ikony dla aplikacji
     a.setWindowIcon(QIcon(iconPath));
     return a.exec();

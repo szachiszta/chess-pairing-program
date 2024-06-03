@@ -13,25 +13,12 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLineEdit" name="txt_date">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>220</y>
-     <width>211</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
   <widget class="QLineEdit" name="txt_place">
    <property name="geometry">
     <rect>
      <x>210</x>
      <y>130</y>
-     <width>211</width>
+     <width>221</width>
      <height>24</height>
     </rect>
    </property>
@@ -44,7 +31,7 @@
     <rect>
      <x>210</x>
      <y>190</y>
-     <width>211</width>
+     <width>221</width>
      <height>24</height>
     </rect>
    </property>
@@ -57,7 +44,7 @@
     <rect>
      <x>210</x>
      <y>100</y>
-     <width>211</width>
+     <width>221</width>
      <height>24</height>
     </rect>
    </property>
@@ -70,7 +57,7 @@
     <rect>
      <x>210</x>
      <y>160</y>
-     <width>211</width>
+     <width>221</width>
      <height>24</height>
     </rect>
    </property>
@@ -201,7 +188,7 @@
      <x>20</x>
      <y>220</y>
      <width>181</width>
-     <height>21</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
@@ -271,7 +258,7 @@
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>470</x>
+     <x>630</x>
      <y>20</y>
      <width>261</width>
      <height>20</height>
@@ -293,7 +280,7 @@
      <x>20</x>
      <y>10</y>
      <width>321</width>
-     <height>41</height>
+     <height>51</height>
     </rect>
    </property>
    <property name="font">
@@ -307,6 +294,16 @@
    </property>
    <property name="textFormat">
     <enum>Qt::PlainText</enum>
+   </property>
+  </widget>
+  <widget class="QDateEdit" name="txt_date">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>220</y>
+     <width>111</width>
+     <height>29</height>
+    </rect>
    </property>
   </widget>
  </widget>

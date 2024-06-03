@@ -26,6 +26,8 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    bool checkPlayerInputs(QString category, QString federation, QString fide, QString name, QString rating, QString surname);
+
 private:
     Ui::addnewplayer *ui;
     int manage_player = -1;
