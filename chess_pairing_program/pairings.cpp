@@ -181,24 +181,6 @@ void pairings::on_current_round_currentIndexChanged(int index)
     mydb.close();
 }
 
-
-void pairings::on_current_round_activated(int index){
-
-}
-
-
-void pairings::on_results_table_activated(const QModelIndex &index)
-{
- ////DO ZOBACZENIA WYNIKOW ZAWODNIKA !
- ///
-    /* DO WYNIKÓW ZAWODNIKA
-SELECT white.player_id, black.player_id, result from games
-inner join players as white on white.player_id = games.white_id
-inner join players as black on black.player_id = games.black_id
-where white_id = 2 or black_id = 2
- */
-}
-
 void pairings::on_pairings_round_clicked(const QModelIndex &index){
     selected_white = index.sibling(index.row(), 0).data().toInt();
     selected_black = index.sibling(index.row(), 4).data().toInt();
@@ -226,8 +208,6 @@ void pairings::Add_result(QString result){
     }
 }
 
-
-
 void pairings::Update_pairings_results(){
     QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
     mydb.setDatabaseName("database.db");
@@ -254,7 +234,6 @@ void pairings::Update_pairings_results(){
     Update_results_table();
 }
 
-
 void pairings::on_b_0_0_clicked(){
     QString result = "0/0";
     Add_result(result);
@@ -263,36 +242,29 @@ void pairings::on_b_0_0_clicked(){
 void pairings::on_b1_0_clicked(){
     QString result = "1/0";
     Add_result(result);
-
 }
-
 
 void pairings::on_b_m_p_clicked(){
     QString result = "-/+";
     Add_result(result);
 }
 
-
 void pairings::on_b_p_m_clicked(){
     QString result = "+/-";
     Add_result(result);
 }
-
 
 void pairings::on_b_0_1_clicked(){
     QString result = "0/1";
     Add_result(result);
 }
 
-
 void pairings::on_b_1_2_clicked(){
     QString result = "1/2";
     Add_result(result);
 }
 
-
-void pairings::Update_results_table(){
-
+void pairings::Update_results_table(QString condition){
     QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
     mydb.setDatabaseName("database.db");
 
@@ -302,6 +274,7 @@ void pairings::Update_results_table(){
     }
 
     QSqlQuery query;
+    //Kwerenda licząca liczbę punktów każdego zawodnika
     QString queryString = R"(
 WITH player_points AS (
     SELECT
@@ -335,10 +308,9 @@ SELECT
 FROM player_points pp
 JOIN players p ON pp.player_id = p.player_id
 WHERE p.player_id != -1
-GROUP BY p.player_id, p.name, p.surname, p.category
-ORDER BY total_points DESC
 )";
-
+    queryString += condition;
+    queryString += "GROUP BY p.player_id, p.name, p.surname, p.category ORDER BY total_points DESC";
     query.prepare(queryString);
 
     if (query.exec()) {
@@ -348,8 +320,31 @@ ORDER BY total_points DESC
     } else {
         qDebug() << "Błąd podczas wykonywania zapytania SQL:" << query.lastError().text();
     }
-
     mydb.close();
+}
 
+void pairings::on_pushButton_2_clicked(){ //Wyniki kobiet
+    QString condition = " and p.sex = 'kobieta' ";
+    Update_results_table(condition);
 
 }
+
+void pairings::on_pushButton_3_clicked(){ // DLA JUNIORÓW PONIŻEJ 19 lat
+    //Konwersja do daty zrozumiałej przez SQLITE
+    QString condition =" and (julianday('now') - julianday(substr(date_of_birth, 7, 4) || '-' || substr(date_of_birth, 4, 2) || '-' || substr(date_of_birth, 1, 2))) / 365.25 < 19 ";
+    Update_results_table(condition);
+}
+
+void pairings::on_pushButton_4_clicked(){
+    QString condition = "";
+    Update_results_table(condition);
+}
+
+void pairings::on_results_table_clicked(const QModelIndex &index)
+{
+    int playerID = index.sibling(index.row(), 0).data().toInt(); // id zawodnika (kliknięty wiersz)
+    PlayerResults playerResults(nullptr, playerID, tournament_idT);
+    playerResults.setModal(true);
+    playerResults.exec();
+}
+

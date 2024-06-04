@@ -2,6 +2,7 @@
 #define PAIRINGS_H
 
 #include <QDialog>
+#include "playerresults.h"
 
 namespace Ui {
 class pairings;
@@ -16,11 +17,8 @@ public:
     ~pairings();
 
 private slots:
-    void on_pushButton_clicked();
     void Show_pairings_round(int round);
     void on_current_round_currentIndexChanged(int index);
-    void on_current_round_activated(int index);
-    void on_results_table_activated(const QModelIndex &index);
     void on_pairings_round_clicked(const QModelIndex &index);
     void Add_result(QString result);
     void Update_pairings_results();
@@ -30,7 +28,13 @@ private slots:
     void on_b_p_m_clicked();
     void on_b_0_1_clicked();
     void on_b_1_2_clicked();
-    void Update_results_table(); //ODŚWIERZ TABELĘ
+    void Update_results_table(QString condition = ""); //ODŚWIERZ TABELĘ
+
+    void on_pushButton_2_clicked();
+    void on_pushButton_3_clicked();
+    void on_pushButton_4_clicked();
+
+    void on_results_table_clicked(const QModelIndex &index);
 
 private:
     Ui::pairings *ui;

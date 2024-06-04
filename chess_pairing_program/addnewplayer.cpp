@@ -75,6 +75,7 @@ void addnewplayer::on_pushButton_2_clicked(){
 
 void addnewplayer::on_tableView_clicked(const QModelIndex &index){
     manage_player = index.sibling(index.row(), 0).data().toInt(); // id zawodnika (kliknięty wiersz)
+    qDebug() << manage_player;
     if(manage_player > -1) {
         QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
         mydb.setDatabaseName("database.db");
@@ -84,23 +85,28 @@ void addnewplayer::on_tableView_clicked(const QModelIndex &index){
             QMessageBox::warning(this, tr("Błąd"), tr("Nie można otworzyć bazy danych: ") + mydb.lastError().text());
             return;
         }
-        QSqlQuery qry;
-        qry.prepare("SELECT * FROM players where player_id=:val");
-        qry.bindValue(":val", manage_player);
 
-        if (qry.exec()) {
-            //USTAWIENIE PÓL FORMULARZA (wynik kwerendy)
-            ui->txt_name->setText(qry.value(1).toString());
-            ui->txt_surname->setText(qry.value(2).toString());
-            ui->txt_sex->setCurrentText(qry.value(3).toString());
-            QDate parsedData = QDate::fromString(qry.value(4).toString(), "dd.MM.yyyy");
-            ui->txt_date->setDate(parsedData);
-            ui->txt_federation->setText(qry.value(5).toString());
-            ui->txt_fide->setText(qry.value(6).toString());
-            ui->txt_rating->setText(qry.value(7).toString());
-            ui->txt_category->setText(qry.value(8).toString());
+        QSqlQuery* qry = new QSqlQuery(mydb);
+        qry->prepare("SELECT * FROM players WHERE player_id = :player");
+        qry->bindValue(":player", manage_player);
+
+        if (qry->exec()) {
+            if (qry->next()) {  // Przejdź do pierwszego wyniku
+                // USTAWIENIE PÓL FORMULARZA (wynik kwerendy)
+                ui->txt_name->setText(qry->value(1).toString());
+                ui->txt_surname->setText(qry->value(2).toString());
+                ui->txt_sex->setCurrentText(qry->value(3).toString());
+                QDate parsedDate = QDate::fromString(qry->value(4).toString(), "dd.MM.yyyy");
+                ui->txt_date->setDate(parsedDate);
+                ui->txt_federation->setText(qry->value(5).toString());
+                ui->txt_fide->setText(qry->value(6).toString());
+                ui->txt_rating->setText(qry->value(7).toString());
+                ui->txt_category->setText(qry->value(8).toString());
+            } else {
+                QMessageBox::warning(this, tr("Błąd"), tr("Nie znaleziono danych zawodnika."));
+            }
         } else {
-            QMessageBox::warning(this, tr("Błąd"), tr("Nie udało się wykonać zapytania: ") + qry.lastError().text());
+            QMessageBox::warning(this, tr("Błąd"), tr("Nie udało się wykonać zapytania: ") + qry->lastError().text());
         }
         mydb.close();
     }
