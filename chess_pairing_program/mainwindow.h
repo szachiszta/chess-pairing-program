@@ -27,21 +27,14 @@ public:
     ~MainWindow();
     void setTournamentID(const QString &result);
     void setTournamentName(const QString &result);
-
 private slots:
     void on_pushButton_4_clicked();
-
     void on_pushButton_3_clicked();
-
     void on_pushButton_clicked();
-
     void on_pushButton_2_clicked();
-
     void on_btn_active_tournament_clicked();
     void onPlayerAdded(const QString &playerId); // Upewnij się, że ta funkcja jest zadeklarowana
     void updatePlayerTable(); // Aktualizacja widoku tabeli
-
-
     void on_btn_pairings_clicked();
 
 private:
@@ -49,5 +42,6 @@ private:
     QString tournament_id = ""; //id aktywnego turnieju
     QString tournament_name = ""; // nazwa aktywnego turnieju
     QVector<QString> playerIds; // Tablica przechowująca ID zawodników
+    bool paired; //czy turniej skojarzony
 };
 #endif // MAINWINDOW_H

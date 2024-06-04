@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>805</width>
+    <width>747</width>
     <height>468</height>
    </rect>
   </property>
@@ -23,6 +23,14 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Liberation Sans</family>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string>Zarządzaj zawodnikami</string>
     </property>
@@ -36,6 +44,14 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Liberation Sans</family>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string>Zarządzaj turniejami</string>
     </property>
@@ -48,6 +64,14 @@
       <width>171</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Liberation Sans</family>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="text">
      <string>Wyjdź</string>
@@ -88,6 +112,11 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Liberation Sans</family>
+     </font>
+    </property>
     <property name="text">
      <string>Aktywny turniej: </string>
     </property>
@@ -100,6 +129,14 @@
       <width>171</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Liberation Sans</family>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="text">
      <string>Wybierz aktywny turniej</string>
@@ -114,6 +151,14 @@
       <height>31</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Liberation Sans</family>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="text">
      <string>Przejdź do kojarzeń</string>
     </property>
@@ -127,6 +172,13 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Liberation Sans</family>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>Nazwa aktywnego turnieju</string>
     </property>
@@ -134,8 +186,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
+      <x>200</x>
+      <y>0</y>
       <width>451</width>
       <height>51</height>
      </rect>
@@ -148,6 +200,25 @@
     </property>
     <property name="text">
      <string>Panel administracyjny</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="paired">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>60</y>
+      <width>171</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Liberation Sans</family>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>

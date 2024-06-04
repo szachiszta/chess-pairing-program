@@ -17,7 +17,50 @@ MainWindow::MainWindow(const QString &resultString,const QString &resultString2,
     if(tournament_id == ""){
         ui->label_active_tournament->setText("Wybierz turniej do kojarzenia");
     }else{
-         ui->label_active_tournament->setText(tournament_name);
+        ui->label_active_tournament->setText(tournament_name);
+        //SPRAWDZENIE CZY SKOJARZONY TURNIEJ JEŻELI SKOJARZONY
+        QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
+        mydb.setDatabaseName("database.db");
+        mydb.open();
+        QSqlQuery qry;
+        qry.prepare("SELECT * FROM games WHERE tournament_id = :val");
+        qry.bindValue(":val", tournament_id);  // Bezpieczne zapytanie
+        paired = false; //skojarzony
+        int recordCount = 0;
+        if (qry.exec()) {
+            while (qry.next()) {
+                recordCount++;
+            }
+            if (recordCount > 0) {
+                paired = true;
+            }
+        }
+        //qDebug() << "Liczba zwróconych rekordów:" << recordCount;
+        //qDebug() << "Czy turniej już skojarzony:" << paired;
+
+        //JEŻELI SKOJARZONY TURNIEJ TO WYPEŁNIJ LISTĘ GRACZY -> powiązane z listą startową
+        if(paired){
+            ui->paired->setText(" Skojarzony");
+            QSqlQuery qry;
+            qry.prepare("SELECT white_id, black_id from games where tournament_id = :tournament_id and round = 1");
+            qry.bindValue(":tournament_id", tournament_id);
+            if (qry.exec()) {
+                while (qry.next()) {
+                    QString white = qry.value(0).toString();
+                    QString black = qry.value(1).toString();
+                    if(white != "-1")
+                        onPlayerAdded(white);
+                    if(black != "-1")
+                        onPlayerAdded(black);
+                }
+                updatePlayerTable(); // zaktualizuj listę
+            }
+            mydb.close();
+        }
+        else{
+            ui->paired->setText(" Nieskojarzony");
+        }
+
     }
 }
 
@@ -113,20 +156,8 @@ void MainWindow::updatePlayerTable(){
 
 void MainWindow::on_btn_pairings_clicked()
 {
-    //SPRAWDZENIE CZY SKOJARZONY TURNIEJ
-    QSqlDatabase mydb = QSqlDatabase::addDatabase("QSQLITE");
-    mydb.setDatabaseName("database.db");
-    mydb.open();
-    QSqlQuery qry;
-    qry.prepare("SELECT * FROM tournaments where id=:val");
-    qry.bindValue(":val", tournament_id);  // Bezpieczne zapytanie
-    bool ok; //skojarzony
-    if (qry.exec()) {
-        if(qry.size() != 0) //jeżeli turniej już skojarzony{
-            ok = true;
-    }
     if(tournament_id != ""){
-        if(playerIds.size()>3 || ok){ //jeżeli turniej juz byl kojarzony -> rekordy w bazie to przejdz
+        if(playerIds.size()>3 || paired){ //jeżeli turniej juz byl kojarzony -> rekordy w bazie to przejdz
             pairings pairings(nullptr, playerIds, tournament_id);
             pairings.setModal(true);
             pairings.exec();

@@ -17,15 +17,10 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-
     void on_pushButton_2_clicked();
-
     void on_tableView_clicked(const QModelIndex &index);
-
     void on_edit_player_clicked();
-
     void on_pushButton_3_clicked();
-
     bool checkPlayerInputs(QString category, QString federation, QString fide, QString name, QString rating, QString surname);
 
 private:
